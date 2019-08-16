@@ -1,0 +1,11 @@
+[Desktop Entry]
+Encoding=UTF-8
+Version=1.0
+Type=Application
+Name=WhatsApp
+Icon=whatsapp
+Exec=/opt/whatsapp/electron-whatsapp
+StartupNotify=false
+StartupWMClass=electron-whatsapp
+OnlyShowIn=Unity;
+X-BAMFGenerated=true
