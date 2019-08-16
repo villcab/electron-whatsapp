@@ -1,23 +1,38 @@
 // Modules to control application life and create native browser window
 const {app, BrowserWindow} = require('electron')
 const path = require('path')
+const windowStateKeeper = require('electron-window-state')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
 
-function createWindow () {
+function createWindow() {
+  // Load the previous state with fallback to defaults
+  let mainWindowState = windowStateKeeper({
+    defaultWidth: 1000,
+    defaultHeight: 800
+  });
+
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    x: mainWindowState.x,
+    y: mainWindowState.y,
+    width: mainWindowState.width,
+    height: mainWindowState.height,
+    icon: path.join(__dirname, "assets", "icon", "whatsapp.png"),
     webPreferences: {
       preload: path.join(__dirname, 'preload.js')
     }
   })
 
   // and load the index.html of the app.
-  mainWindow.loadFile('index.html')
+
+  // mainWindow.loadFile('index.html')
+  mainWindow.loadURL("https://web.whatsapp.com/", {
+    userAgent: mainWindow.webContents.getUserAgent().replace(/(Electron|electron-whatsapp)\/([0-9\.]+)\ /gi, "")
+  }).then(() => console.info('Electron WhatsApp has Started'))
+    .catch(reason => console.error('Failed to load web whatsapp url: ' + reason))
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
@@ -29,6 +44,8 @@ function createWindow () {
     // when you should delete the corresponding element.
     mainWindow = null
   })
+
+  mainWindowState.manage(mainWindow)
 }
 
 // This method will be called when Electron has finished
