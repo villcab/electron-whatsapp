@@ -1,11 +1,12 @@
 // Modules to control application life and create native browser window
-const {app, BrowserWindow} = require('electron')
+const {app, Tray, BrowserWindow} = require('electron')
 const path = require('path')
 const windowStateKeeper = require('electron-window-state')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
+let tray
 
 function createWindow() {
   // Load the previous state with fallback to defaults
@@ -20,7 +21,7 @@ function createWindow() {
     y: mainWindowState.y,
     width: mainWindowState.width,
     height: mainWindowState.height,
-    icon: path.join(__dirname, "assets", "icon", "whatsapp.png"),
+    icon: path.join(__dirname, "assets", "whatsapp.png"),
     webPreferences: {
       preload: path.join(__dirname, 'preload.js')
     }
@@ -44,6 +45,10 @@ function createWindow() {
     // when you should delete the corresponding element.
     mainWindow = null
   })
+
+  // Tray icon
+  tray = new Tray(path.join(__dirname, "assets", "tray_whatsapp_rest.png"))
+  tray.setToolTip("WhatsApp")
 
   mainWindowState.manage(mainWindow)
 }
