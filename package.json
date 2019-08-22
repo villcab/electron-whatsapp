@@ -1,7 +1,8 @@
 {
-	"name": "whatsdesk",
+	"name": "whatsapp",
+	"appname": "WhatsApp",
 	"version": "1.0.0",
-	"description": "Unofficial WhatsApp Client for Linux ",
+	"description": "Unofficial WhatsApp for Linux ",
 	"main": "src/main.js",
 	"homepage": "https://gitlab.com/zerkc/whatsdesk",
 	"scripts": {
@@ -17,7 +18,7 @@
 	"keywords": [
 		"WhatsApp"
 	],
-	"author": "Zerkc <incoming+zerkc/whatsdesk@incoming.gitlab.com>",
+	"author": "Bismarck Villca Soliz <villcab/bismarck.villca@gmail.com>",
 	"license": "MIT",
 	"dependencies": {
 		"copy": "^0.3.2",

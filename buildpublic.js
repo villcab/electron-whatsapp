@@ -5,7 +5,7 @@ const copy = require('copy');
 const crypto = require('crypto');
 let update = {};
 
-update.name = 'WhatsApp';
+update.name = package.appname;
 update.version = package.version;
 update.description = package.description;
 
@@ -13,8 +13,8 @@ if (!fs.existsSync("page")) {
     fs.mkdirSync("page")
 }
 
-del.sync("./page/whatsdesk_*.deb");
-copy(`./dist/whatsdesk_${package.version}_*.deb`, "./page/", (a, files) => {
+del.sync("./page/whatsapp_*.deb");
+copy(`./dist/whatsapp_${package.version}_*.deb`, "./page/", (a, files) => {
     update.file = files[0].basename;
     let data = fs.readFileSync(`./page/${update.file}`);
     let checksum = generateChecksum(data);
