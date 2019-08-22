@@ -1,13 +1,14 @@
-import {app, BrowserWindow, ipcMain, Menu, shell, Tray} from 'electron';
-import fs from 'fs';
-import path from 'path';
-import notify from 'electron-main-notification'
-//import playsound from './sounds/sound';
-import windowSettings from './pages/settings';
-import {getPlugins} from "./plugins";
-import {checkUpdates, createDefault, getWhatsdeskPath, isRunning} from './functions.js';
-
+const {app, BrowserWindow, ipcMain, Menu, shell, Tray} = require('electron')
+const fs = require('fs')
+const path = require('path')
+const notify = require('electron-main-notification')
 const windowStateKeeper = require('electron-window-state')
+
+const windowSettings = require('./pages/settings')
+const {checkUpdates, createDefault, getWhatsdeskPath, isRunning} = require('./functions.js')
+const {getPlugins} = require('./plugins')
+
+//import playsound from './sounds/sound';
 
 let notificationsActives = [];
 let injectScripts = [
@@ -24,10 +25,10 @@ let settings = createDefault();
 process.title = 'WhatsDesk';
 
 app.on("ready", async _ => {
-  var iShouldQuit = isRunning(win);
+  let iShouldQuit = isRunning(win);
   if (iShouldQuit) {
     console.log("whatsdesk is running")
-    app.quit(0);
+    app.quit();
     process.exit(0);
     return;
   }
@@ -194,7 +195,7 @@ function handleRedirect(e, url) {
 
 function showNotification() {
   win.flashFrame(true);
-  appIcon.setImage(path.join(__dirname, "icon", "tray-icon-on.png"))
+  appIcon.setImage(path.join(__dirname, "icon", "tray_whatsapp_active.png"))
 }
 
 function destroyNotification() {
