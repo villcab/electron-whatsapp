@@ -1,7 +1,7 @@
 {
 	"name": "whatsdesk",
-	"version": "0.2.18",
-	"description": "unofficial whatsapp client for linux ",
+	"version": "1.0.0",
+	"description": "Unofficial WhatsApp Client for Linux ",
 	"main": "src/main.js",
 	"homepage": "https://gitlab.com/zerkc/whatsdesk",
 	"scripts": {

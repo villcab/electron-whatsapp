@@ -5,7 +5,7 @@ const copy = require('copy');
 const crypto = require('crypto');
 let update = {};
 
-update.name = package.name;
+update.name = 'WhatsApp';
 update.version = package.version;
 update.description = package.description;
 
