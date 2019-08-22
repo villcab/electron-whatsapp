@@ -8,15 +8,79 @@ const windowSettings = require('./pages/settings')
 const {checkUpdates, createDefault, getWhatsdeskPath, isRunning} = require('./functions.js')
 const {getPlugins} = require('./plugins')
 
+const appUrl = 'https://web.whatsapp.com/';
+
 //import playsound from './sounds/sound';
 
-let notificationsActives = [];
-let injectScripts = ["unregisterservices.js", "loadscript.js", "notifications.js", "links.js", "menucontextual.js"];
-let mainWindow;
-let appIcon;
-let settings = createDefault();
+let notificationsActives = []
+let injectScripts = ["unregisterservices.js", "loadscript.js", "notifications.js", "links.js", "menucontextual.js"]
+let mainWindow
+let trayIcon
 
-process.title = 'WhatsApp';
+// process.title = 'WhatsApp';
+
+function createWindow() {
+
+    // Create the browser window.
+    let mainWindowState = windowStateKeeper({
+        defaultWidth: 1000,
+        defaultHeight: 700
+    })
+    mainWindow = new BrowserWindow({
+        x: mainWindowState.x,
+        y: mainWindowState.y,
+        width: mainWindowState.width,
+        height: mainWindowState.height,
+        show: false,
+        icon: path.join(__dirname, "icon", "whatsapp.png"),
+        webPreferences: {
+            // preload: path.join(__dirname, 'preload.js'),
+            experimentalFeatures: true
+        }
+    })
+    mainWindowState.manage(mainWindow)
+
+    // Load url or index.html
+    mainWindow.loadURL(appUrl, {
+        userAgent: mainWindow.webContents.getUserAgent().replace(/(Electron|whatsdesk)\/([0-9\.]+)\ /gi, "")
+    });
+}
+
+app.on("ready", createWindow)
+
+app.on("ready-to-show", function () {
+    let plugins = getPlugins();
+    mainWindow.show();
+    for (let state in plugins) {
+        for (let pname in plugins[state]) {
+            let plugin = plugins[state][pname];
+            plugin.js.forEach(js => {
+                let script = fs.readFileSync(js, "utf8");
+                mainWindow.webContents.executeJavaScript(script);
+            });
+        }
+    }
+    mainWindow.webContents.executeJavaScript(`_beforeload = ${JSON.stringify(Object.keys(plugins.beforeload))}`);
+    mainWindow.webContents.executeJavaScript(`_afterload = ${JSON.stringify(Object.keys(plugins.afterload))}`);
+    for (let scriptName of injectScripts) {
+        let script = fs.readFileSync(path.join(__dirname, "scripts", scriptName), "utf8");
+        mainWindow.webContents.executeJavaScript(script);
+    }
+})
+
+app.on('window-all-closed', function () {
+    // On macOS it is common for applications and their menu bar
+    // to stay active until the user quits explicitly with Cmd + Q
+    if (process.platform !== 'darwin') app.quit()
+})
+
+app.on('activate', function () {
+    // On macOS it's common to re-create a window in the app when the
+    // dock icon is clicked and there are no other windows open.
+    if (mainWindow === null) createWindow()
+})
+
+// ---------------------------------------------------------------------------------------------------------------------
 
 app.on("ready", async _ => {
     let iShouldQuit = isRunning(mainWindow);
@@ -35,10 +99,10 @@ app.on("ready", async _ => {
         }
     })
 
-    let mainWindowState = windowStateKeeper({
-        defaultWidth: 1000,
-        defaultHeight: 700
-    })
+    // let mainWindowState = windowStateKeeper({
+    //     defaultWidth: 1000,
+    //     defaultHeight: 700
+    // })
 
     //globalShortcut.register('CommandOrControl+Q', () => { })
     appIcon = new Tray(path.join(__dirname, "icon", "tray_whatsapp_rest.png"));

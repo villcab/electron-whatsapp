@@ -1,10 +1,9 @@
 {
-	"name": "whatsapp",
-	"appname": "WhatsApp",
+	"name": "whatsappforlinux",
 	"version": "1.0.0",
 	"description": "Unofficial WhatsApp for Linux ",
 	"main": "src/main.js",
-	"homepage": "https://gitlab.com/zerkc/whatsdesk",
+	"homepage": "https://github.com/villcab/electron-whatsapp",
 	"scripts": {
 		"start": "electron .",
 		"pack": "electron-builder --dir",
