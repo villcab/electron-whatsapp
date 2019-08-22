@@ -1,0 +1,17 @@
+<html>
+<head>
+<meta charset="utf-8">
+<title></title>
+</head>
+<body>
+
+<script type="text/javascript">
+    const { ipcRenderer } = require('electron')
+    const aud = new Audio();
+    aud.autoplay = true;
+    ipcRenderer.on('playsound', (event, arg) => {
+        aud.src = arg;
+    })
+</script>
+</body>
+</html>
