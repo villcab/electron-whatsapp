@@ -21,7 +21,7 @@ process.title = 'WhatsApp';
 app.on("ready", async _ => {
     let iShouldQuit = isRunning(mainWindow);
     if (iShouldQuit) {
-        console.log("whatsdesk is running")
+        console.log("WhatsApp is running")
         app.quit();
         process.exit(0);
         return;
@@ -59,7 +59,7 @@ app.on("ready", async _ => {
 
     mainWindow.setMenu(null);
     mainWindow.loadURL("https://web.whatsapp.com/", {
-        userAgent: mainWindow.webContents.getUserAgent().replace(/(Electron|whatsdesk)\/([0-9\.]+)\ /gi, "")
+        userAgent: mainWindow.webContents.getUserAgent().replace(/(Electron|whatsapp|whatsdesk)\/([0-9\.]+)\ /gi, "")
     });
     //win.webContents.openDevTools();
     mainWindow.on('ready-to-show', () => {
@@ -83,7 +83,7 @@ app.on("ready", async _ => {
     });
     mainWindow.on('page-title-updated', (evt, title) => {
         evt.preventDefault()
-        title = title.replace(/(\([0-9]+\) )?.*/, "$1WhatsDesk");
+        title = title.replace(/(\([0-9]+\) )?.*/, "$1WhatsApp");
         mainWindow.setTitle(title);
         appIcon.setToolTip(title);
         if (/\([0-9]+\)/.test(title)) {
@@ -114,7 +114,7 @@ app.on("ready", async _ => {
 
     const contextMenu = Menu.buildFromTemplate([
         // {
-        //     label: 'Show/Hide WhatsDesk', click: function () {
+        //     label: 'Show/Hide WhatsApp', click: function () {
         //         mainWindow.isVisible() ? mainWindow.hide() : mainWindow.show()
         //     }
         // },

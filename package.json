@@ -1,8 +1,8 @@
 {
 	"name": "whatsapp",
 	"appname": "WhatsApp",
-	"version": "1.0.0",
-	"description": "Unofficial WhatsApp for Linux ",
+	"version": "1.0.1",
+	"description": "Unofficial WhatsApp for Linux",
 	"main": "src/main.js",
 	"homepage": "https://gitlab.com/zerkc/whatsdesk",
 	"scripts": {

@@ -14,7 +14,7 @@ if (!fs.existsSync("page")) {
 }
 
 del.sync("./page/whatsapp_*.deb");
-copy(`./dist/whatsapp_${package.version}_*.deb`, "./page/", (a, files) => {
+copy(`./dist/whatsapp_${update.version}_*.deb`, "./page/", (a, files) => {
     update.file = files[0].basename;
     let data = fs.readFileSync(`./page/${update.file}`);
     let checksum = generateChecksum(data);

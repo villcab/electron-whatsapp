@@ -44,9 +44,9 @@ export function checkUpdates() {
 export function getWhatsdeskPath() {
     let home = app.getPath('home');
     if (home.indexOf("/snap/") != -1) {
-        home = home.substring(0, home.indexOf("/whatsdesk/") + 11) + "current";
+        home = home.substring(0, home.indexOf("/whatsapp/") + 11) + "current";
     }
-    return  path.join(home, ".whatsdesk");;
+    return  path.join(home, ".whatsapp");;
 }
 
 export function isSnap() {
@@ -94,7 +94,7 @@ export function defaultConfigs(obj = {}){
     let configs = {
         general:{
             closeExit:{
-                value:false,
+                value:true,
                 type:"checkbox",
                 text:"Close window and Exit",
                 tinytext:null
