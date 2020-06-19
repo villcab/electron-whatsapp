@@ -1,12 +1,12 @@
-const {app, BrowserWindow, ipcMain, Menu, shell, Tray} = require('electron')
+const { app, BrowserWindow, ipcMain, Menu, shell, Tray } = require('electron')
 const path = require('path')
 const fs = require('fs')
 const notify = require('electron-main-notification')
 const windowStateKeeper = require('electron-window-state')
 
 const windowSettings = require('./pages/settings')
-const {checkUpdates, createDefault, getWhatsdeskPath, isRunning} = require('./functions.js')
-const {getPlugins} = require('./plugins')
+const { checkUpdates, createDefault, getWhatsdeskPath, isRunning } = require('./functions.js')
+const { getPlugins } = require('./plugins')
 
 //import playsound from './sounds/sound';
 
@@ -17,6 +17,7 @@ let appIcon;
 let settings = createDefault();
 
 process.title = 'WhatsApp';
+let whatsappUrl = 'https://web.whatsapp.com/';
 
 app.on("ready", async _ => {
     let iShouldQuit = isRunning(mainWindow);
@@ -29,7 +30,7 @@ app.on("ready", async _ => {
     let plugins = getPlugins();
     checkUpdates().then(update => {
         if (update) {
-            notify("Update", {body: "Update avalible"}, () => {
+            notify("Update", { body: "Update avalible" }, () => {
                 shell.openExternal("https://zerkc.gitlab.io/whatsdesk/");
             });
         }
@@ -58,8 +59,8 @@ app.on("ready", async _ => {
     mainWindowState.manage(mainWindow)
 
     mainWindow.setMenu(null);
-    mainWindow.loadURL("https://web.whatsapp.com/", {
-        userAgent: mainWindow.webContents.getUserAgent().replace(/(Electron|whatsapp|whatsdesk)\/([0-9\.]+)\ /gi, "")
+    mainWindow.loadURL(whatsappUrl, {
+        userAgent: mainWindow.webContents.getUserAgent().replace(/(Electron|whatsapp)\/([0-9\.]+)\ /gi, "")
     });
     //win.webContents.openDevTools();
     mainWindow.on('ready-to-show', () => {
@@ -113,11 +114,11 @@ app.on("ready", async _ => {
     });
 
     const contextMenu = Menu.buildFromTemplate([
-        // {
-        //     label: 'Show/Hide WhatsApp', click: function () {
-        //         mainWindow.isVisible() ? mainWindow.hide() : mainWindow.show()
-        //     }
-        // },
+        {
+            label: 'Show/Hide WhatsApp', click: function () {
+                mainWindow.isVisible() ? mainWindow.hide() : mainWindow.show()
+            }
+        },
         {
             label: 'Quit', click: function () {
                 mainWindow.destroy();
@@ -181,7 +182,7 @@ app.on("ready", async _ => {
 })
 
 function handleRedirect(e, url) {
-    if (!url.startsWith("https://web.whatsapp.com/")) {
+    if (!url.startsWith(whatsappUrl)) {
         e.preventDefault()
         shell.openExternal(url)
     }
