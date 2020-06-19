@@ -16,13 +16,13 @@ let mainWindow;
 let appIcon;
 let settings = createDefault();
 
-process.title = 'WhatsApp';
+process.title = 'WhatsApp Desktop';
 let whatsappUrl = 'https://web.whatsapp.com/';
 
 app.on("ready", async _ => {
     let iShouldQuit = isRunning(mainWindow);
     if (iShouldQuit) {
-        console.log("WhatsApp is running")
+        console.log("WhatsApp Desktop is running")
         app.quit();
         process.exit(0);
         return;
@@ -84,7 +84,7 @@ app.on("ready", async _ => {
     });
     mainWindow.on('page-title-updated', (evt, title) => {
         evt.preventDefault()
-        title = title.replace(/(\([0-9]+\) )?.*/, "$1WhatsApp");
+        title = title.replace(/(\([0-9]+\) )?.*/, "$1WhatsApp Desktop");
         mainWindow.setTitle(title);
         appIcon.setToolTip(title);
         if (/\([0-9]+\)/.test(title)) {
@@ -133,7 +133,7 @@ app.on("ready", async _ => {
 
     // Make a change to the context menu
     contextMenu.items[1].checked = false
-    appIcon.setToolTip('WhatsApp')
+    appIcon.setToolTip('WhatsApp Desktop')
 
     // Call this again for Linux because we modified the context menu
     appIcon.setContextMenu(contextMenu)
@@ -178,7 +178,7 @@ app.on("ready", async _ => {
             ]
         }*/
     ])
-    mainWindow.setMenu(menu);
+    //mainWindow.setMenu(menu);
 })
 
 function handleRedirect(e, url) {

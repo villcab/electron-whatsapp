@@ -1,8 +1,8 @@
 {
 	"name": "whatsapp",
-	"appname": "WhatsApp",
+	"appname": "WhatsApp Desktop",
 	"version": "1.0.2",
-	"description": "Unofficial WhatsApp for Linux",
+	"description": "Unofficial WhatsApp Desktop for Linux",
 	"main": "src/main.js",
 	"homepage": "https://gitlab.com/zerkc/whatsdesk",
 	"scripts": {
@@ -16,7 +16,8 @@
 		"url": " "
 	},
 	"keywords": [
-		"WhatsApp"
+		"WhatsApp",
+		"WhatsApp Desktop"
 	],
 	"author": "Bismarck Villca Soliz <villcab/bismarck.villca@gmail.com>",
 	"license": "MIT",
@@ -62,7 +63,10 @@
 					]
 				},
 				"snap"
-			]
+			],
+			"desktop": {
+				"Name": "WhatsApp Desktop"
+			}
 		},
 		"win": {
 			"icon": "src/icon/logo.ico",
